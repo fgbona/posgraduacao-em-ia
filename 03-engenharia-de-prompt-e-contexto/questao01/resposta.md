@@ -1,9 +1,9 @@
-###### Prompt
+# Prompt
 
-#Role
+## Role
 Você é um engenheiro DevOps/SRE sênior especialista em containerização Docker e deploy em Kubernetes.
 
-#Task
+## Task
 Tenho um sistema chamado Lift que está rodando em VM atualmente e deve ser migrado para Kubernetes. Na vm, o codigo atualmente rodando é uma API Python/Flask na porta 8080, dependências declaradas em requirements.txt, e duas variáveis de ambiente que precisam estar presentes no runtime, DATABASE_URL e API_KEY. Em produção o serviço sobe com gunicorn --bind 0.0.0.0:8080 --workers 4 app:app.
 
 Estrutura do projeto:
@@ -26,15 +26,16 @@ requests==2.31.0
 python-dotenv==1.0.0
 psycopg2-binary==2.9.9
 
-#Format
+## Format
 Crie um Dockerfile para rodar o projeto com as melhores práticas de infraestrutura e segurança.
 
 
-###### Modelo
+# Modelo
 Claude sonnet 4.6
 
 
-###### Output
+# Output
+```
 # =============================================================================
 # Stage 1: builder
 # Instala dependências em ambiente isolado para não contaminar a imagem final
@@ -121,6 +122,7 @@ CMD ["gunicorn", \
      "--error-logfile", "-", \
      "--log-level", "info", \
      "app:app"]
+```
 
 Decisões de design
 Multi-stage build
@@ -131,15 +133,18 @@ O runtime copia apenas os .whl já instalados, resultando numa imagem final sign
 
 Segurança
 PráticaMotivoUsuário lift sem privilégiosContainment: processo não roda como root/sbin/nologin no useraddSem shell interativo — impossível docker exec -it ... /bin/bash acidentalmentetests/ não copiadoCódigo de teste não tem lugar em produçãoSem ENV DATABASE_URL / ENV API_KEYSegredos são injetados pelo K8s em runtime; valor hardcoded no Dockerfile vaza via docker inspect e docker historyapt-get clean && rm -rf /var/lib/apt/lists/*Reduz tamanho e elimina metadados de pacotes desnecessários
+
 Sinais e graceful shutdown
 O CMD usa exec form (array JSON) em vez de shell form (CMD "gunicorn ..."). Com shell form, o PID 1 seria /bin/sh, e o SIGTERM do Kubernetes no rolling update não chegaria ao Gunicorn — o pod seria encerrado forçosamente após o terminationGracePeriodSeconds. Com exec form, o Gunicorn é o PID 1 e trata o sinal corretamente.
+
 Cache de layers otimizado
 O COPY requirements.txt . vem antes do COPY app.py, porque o requirements muda com muito menos frequência que o código. O Docker reusa a layer do pip install a menos que o arquivo de dependências mude — builds iterativos ficam muito mais rápidos.
+
 Healthcheck
 O HEALTHCHECK instrui o Docker runtime (e o Kubernetes, se você não usar liveness probe no manifest) a verificar a saúde do container. Para o K8s, o recomendado é configurar livenessProbe e readinessProbe no Deployment — o healthcheck do Dockerfile é um fallback útil para ambientes sem orquestração.
 
 
-###### Justificativa
+# Justificativa
 
 Role: Defini que a role deveria ser um desenvolvedor senior, especialista em Kubernetes e docker pela experiencia necessaria e complexidade do contexto.
 Task: Dei um contexto mais simplorio, dando algumas informações úteis para que o modelo pudesse ser o mais acertivo possível em sua resposta, como onde eu estou e para onde quero ir.
