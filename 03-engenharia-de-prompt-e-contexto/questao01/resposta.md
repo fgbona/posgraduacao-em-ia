@@ -134,7 +134,9 @@ O builder instala pip, compiladores e dependências de build — nada disso vai 
 O runtime copia apenas os .whl já instalados, resultando numa imagem final significativamente menor e com menor superfície de ataque
 
 Segurança
+```
 PráticaMotivoUsuário lift sem privilégiosContainment: processo não roda como root/sbin/nologin no useraddSem shell interativo — impossível docker exec -it ... /bin/bash acidentalmentetests/ não copiadoCódigo de teste não tem lugar em produçãoSem ENV DATABASE_URL / ENV API_KEYSegredos são injetados pelo K8s em runtime; valor hardcoded no Dockerfile vaza via docker inspect e docker historyapt-get clean && rm -rf /var/lib/apt/lists/*Reduz tamanho e elimina metadados de pacotes desnecessários
+```
 
 Sinais e graceful shutdown
 O CMD usa exec form (array JSON) em vez de shell form (CMD "gunicorn ..."). Com shell form, o PID 1 seria /bin/sh, e o SIGTERM do Kubernetes no rolling update não chegaria ao Gunicorn — o pod seria encerrado forçosamente após o terminationGracePeriodSeconds. Com exec form, o Gunicorn é o PID 1 e trata o sinal corretamente.
