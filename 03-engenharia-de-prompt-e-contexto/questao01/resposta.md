@@ -7,7 +7,7 @@ Você é um engenheiro DevOps/SRE sênior especialista em containerização Dock
 Tenho um sistema chamado Lift que está rodando em VM atualmente e deve ser migrado para Kubernetes. Na vm, o codigo atualmente rodando é uma API Python/Flask na porta 8080, dependências declaradas em requirements.txt, e duas variáveis de ambiente que precisam estar presentes no runtime, DATABASE_URL e API_KEY. Em produção o serviço sobe com gunicorn --bind 0.0.0.0:8080 --workers 4 app:app.
 
 Estrutura do projeto:
-
+```
 lift/
 ├── app.py
 ├── requirements.txt
@@ -16,8 +16,8 @@ lift/
 │   └── storage.py
 └── tests/
     └── test_app.py
-
-
+```
+```
 requirements.txt
 
 Flask==3.0.0
@@ -25,7 +25,7 @@ gunicorn==21.2.0
 requests==2.31.0
 python-dotenv==1.0.0
 psycopg2-binary==2.9.9
-
+```
 ## Format
 Crie um Dockerfile para rodar o projeto com as melhores práticas de infraestrutura e segurança.
 
