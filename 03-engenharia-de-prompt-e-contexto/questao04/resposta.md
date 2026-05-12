@@ -208,10 +208,15 @@ ORDER BY mes ASC, categoria ASC;
 Características:
 
 ✅ Filtra transações com status = 'completed'
+
 ✅ Converte centavos em reais com 2 casas decimais
+
 ✅ Agrupa por mês (formato YYYY-MM) e categoria
+
 ✅ Retorna quantidade de transações e volume total
+
 ✅ Ordena por mês crescente, depois categoria crescente
+
 ✅ Período: últimos 6 meses completos (24/10/2025 a 24/04/2026)
 
 📄 Relatório em Markdown
