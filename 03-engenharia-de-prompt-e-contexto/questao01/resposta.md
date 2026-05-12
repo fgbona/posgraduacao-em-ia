@@ -135,7 +135,12 @@ O runtime copia apenas os .whl já instalados, resultando numa imagem final sign
 
 Segurança
 ```
-PráticaMotivoUsuário lift sem privilégiosContainment: processo não roda como root/sbin/nologin no useraddSem shell interativo — impossível docker exec -it ... /bin/bash acidentalmentetests/ não copiadoCódigo de teste não tem lugar em produçãoSem ENV DATABASE_URL / ENV API_KEYSegredos são injetados pelo K8s em runtime; valor hardcoded no Dockerfile vaza via docker inspect e docker historyapt-get clean && rm -rf /var/lib/apt/lists/*Reduz tamanho e elimina metadados de pacotes desnecessários
+Prática                                         Motivo
+Usuário lift sem privilégios                    Containment: processo não roda como root
+/sbin/nologin no useradd                        Sem shell interativo — impossível docker exec -it ... /bin/bash acidentalmente
+tests/ não copiado                              Código de teste não tem lugar em produção
+Sem ENV DATABASE_URL / ENV API_KEY              Segredos são injetados pelo K8s em runtime; valor hardcoded no Dockerfile vaza via docker inspect e docker history
+apt-get clean && rm -rf /var/lib/apt/lists/*    Reduz tamanho e elimina metadados de pacotes desnecessários
 ```
 
 Sinais e graceful shutdown
