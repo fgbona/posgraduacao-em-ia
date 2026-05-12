@@ -1,8 +1,8 @@
 # Prompt
-# Task
+## Task
 Crie um relatório para o gerente, a ser entregue ao CEO, sobre o crescimento das transações nos últimos 6 meses. O gerente precisa dos números, porém, como não escreve SQL, enviou a solicitação ao Reactor, um sistema de mensageria.
 
-# Action
+## Action
 O banco de dados PostgreSQL, com as tabelas mais relevantes listadas abaixo, possui o histórico completo. Categorias em produção hoje: subscription, one_time, refund e credit_adjustment. "Com base no schema abaixo, escreva a query SQL PostgreSQL que extraia esses dados."
 
 CREATE TABLE transactions (
@@ -25,7 +25,7 @@ CREATE TABLE customers (
   country     CHAR(2) NOT NULL,
   signup_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
-# Goal
+## Goal
 Escreve uma relatório, que tenha um filtro status = 'completed'. O campo amount_cents está em centavos de real e precisa aparecer na saída em reais com 2 casas decimais. O recorte é dos últimos 6 meses corridos a partir de hoje (2026-04-24), agrupado por mês (no formato YYYY-MM) e por categoria, trazendo duas métricas por linha:
 * quantidade de transações
 * volume total em reais.
@@ -65,8 +65,8 @@ Ordenação: primeiro por mês (crescente), depois por categoria (crescente)
 2. Relatório em Markdown
 Vou criar o relatório formatado:
 
-# Relatório de Crescimento de Transações
-## Período: Últimos 6 Meses (Outubro 2025 - Abril 2026)
+## Relatório de Crescimento de Transações
+### Período: Últimos 6 Meses (Outubro 2025 - Abril 2026)
 
 **Data do Relatório:** 24 de abril de 2026
 **Destinatário:** CEO
