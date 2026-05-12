@@ -310,11 +310,13 @@ s3api list-objects-v2 na rotação — mais preciso que aws s3 ls para filtrar p
 
 Para agendar via cron (exemplo diário às 01h00 UTC):
 bash# Wrapper que busca a senha no Secrets Manager antes de chamar o script
+```
 0 1 * * * root export PGPASSWORD=$(aws secretsmanager get-secret-value \
   --secret-id ledger/backup_user \
   --query SecretString \
   --output text \
   --region us-east-1) && bash /opt/scripts/ledger_backup.sh
+```
 
 # Justificativa
 Role: Uma vez a role estabelecida, o modelo tem melhor direcionamento para a resposta do que for solicitado, nesse caso como temos EC2, optei por colocar um SRE especialista em cloud AWS.
