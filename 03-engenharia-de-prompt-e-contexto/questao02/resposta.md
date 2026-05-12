@@ -296,19 +296,28 @@ fi
 ```
 
 Estrutura e fluxo
+
 O script é dividido em 6 funções com responsabilidade única, seguindo o princípio de separação de concerns — facilita manutenção e testes isolados.
-FunçãoResponsabilidadevalidate_environmentCheca dependências, PGPASSWORD, espaço em discorun_dumppg_dump com pipe direto para gzipupload_to_s3aws s3 cp com storage class STANDARD_IAcleanup_localRemove o .sql.gz local após uploadrotate_s3_backupsExclui objetos S3 com LastModified > 30 diashandle_errorTrap de ERR — loga linha, limpa arquivo parcial
+
+FunçãoResponsabilidadevalidate_environmentCheca dependências, PGPASSWORD, espaço em discorun_dumppg_dump com pipe direto para gzipupload_to_s3aws s3 cp com storage class 
+
+STANDARD_IAcleanup_localRemove o .sql.gz local após uploadrotate_s3_backupsExclui objetos S3 com LastModified > 30 diashandle_errorTrap de ERR — loga linha, limpa arquivo parcial
 
 Decisões de SRE
 
 set -euo pipefail — mais robusto que apenas -e; o pipefail captura falhas dentro do pg_dump | gzip, que de outra forma seriam silenciadas.
+
 Streaming sem arquivo intermediário — o pipe pg_dump | gzip > arquivo evita escrever ~25-30 GB de SQL puro antes de compactar, crítico dado que o disco tem 80 GB livres e o dump compactado já é ~12 GB.
+
 pg_dump --format=custom — formato binário nativo do PostgreSQL, mais compacto e restaurável com pg_restore com seleção de objetos.
+
 STANDARD_IA no S3 — adequado para backups: custo de armazenamento menor, com custo de recuperação aceitável para um restore pontual.
+
 s3api list-objects-v2 na rotação — mais preciso que aws s3 ls para filtrar por data via query JMESPath.
 
 
 Para agendar via cron (exemplo diário às 01h00 UTC):
+
 bash# Wrapper que busca a senha no Secrets Manager antes de chamar o script
 ```
 0 1 * * * root export PGPASSWORD=$(aws secretsmanager get-secret-value \
@@ -319,6 +328,9 @@ bash# Wrapper que busca a senha no Secrets Manager antes de chamar o script
 ```
 
 # Justificativa
+
 Role: Uma vez a role estabelecida, o modelo tem melhor direcionamento para a resposta do que for solicitado, nesse caso como temos EC2, optei por colocar um SRE especialista em cloud AWS.
+
 Task: Solicitei criar um script com detalhes que dessem ao modelo a possibilidade de ser o mais acertivo possível. Como a role foi bem definida, a task veio bem completa.
+
 Format: um Script bash comentado, utilizando melhores práticas, dando preferencia por functions.
