@@ -1,38 +1,44 @@
 # Prompt
+
 ## Role
 Você é um SRE sênior especialista em Cloud AWS.
 
 ## Task
-
 Crie um script em Bash para fazer backup de uma database postgresql na AWS que roda em uma EC2. O script precisa de seguir uma ordem passo a passo:
 
-fazer o dump com pg_dump
-compactar com gzip
-fazer upload do arquivo para o buckset s3 hvt-ledger-backups via clia com aws s3 cp
-depois de 30 dias no s3 remover os arquivos mais antigos
-registrar as execuções do script com timestamp no arquivo /var/log/ledger-backup.log
-definir set -e no início do script para, em caso de erro, parar a execução e mostrar a falha.
+- Fazer o dump com `pg_dump`
+- Compactar com `gzip`
+- Fazer upload do arquivo para o bucket S3 `hvt-ledger-backups` via CLI com `aws s3 cp`
+- Depois de 30 dias no S3, remover os arquivos mais antigos
+- Registrar as execuções do script com timestamp no arquivo `/var/log/ledger-backup.log`
+- Definir `set -e` no início do script para, em caso de erro, parar a execução e mostrar a falha
 
 Segue as variáveis do ambiente:
 
-* Host: `ledger-db.internal.hvt.io`
-* Porta: `5432`
-* Banco: `ledger_prod`
-* Usuário de backup: `backup_user`
-* Senha: variável de ambiente `PGPASSWORD`, populada pelo AWS Secrets Manager via IAM role da instância
-* Região AWS: `us-east-1`
-* SO da instância: Ubuntu 22.04 LTS
-* Diretório de trabalho com 80 GB livres: `/var/backups/ledger`
-* Tamanho médio atual do dump compactado: ~12 GB
+- **Host:** `ledger-db.internal.hvt.io`
+- **Porta:** `5432`
+- **Banco:** `ledger_prod`
+- **Usuário de backup:** `backup_user`
+- **Senha:** variável de ambiente `PGPASSWORD`, populada pelo AWS Secrets Manager via IAM role da instância
+- **Região AWS:** `us-east-1`
+- **SO da instância:** Ubuntu 22.04 LTS
+- **Diretório de trabalho com 80 GB livres:** `/var/backups/ledger`
+- **Tamanho médio atual do dump compactado:** ~12 GB
 
 ## Format
 O script bash deve ser comentado em cada instrução feita para ter melhor qualidade para dar manutenção. Prefira o uso de functions, se for parte das melhores práticas.
 
+---
+
 # Modelo
-Claude sonnet 4.6
+
+**Claude Sonnet 4.6**
+
+---
 
 # Output
-```
+
+```bash
 #!/usr/bin/env bash
 # =============================================================================
 # ledger_backup.sh
@@ -137,7 +143,7 @@ validate_environment() {
 
     # Verifica espaço em disco disponível no diretório de trabalho
     local free_gb
-    free_gb=$(df -BG "${BACKUP_DIR}" | awk 'NR==2 {gsub("G",""); print $4}')
+    free_gb=$(df -BG "${BACKUP_DIR}" | awk 'NR==2 {gsub("G",""); print \$4}')
     if (( free_gb < MIN_FREE_GB )); then
         log_error "Espaço insuficiente em ${BACKUP_DIR}: ${free_gb} GB livres (mínimo exigido: ${MIN_FREE_GB} GB)."
         exit 1
@@ -261,7 +267,7 @@ rotate_s3_backups() {
 # =============================================================================
 handle_error() {
     local exit_code=$?
-    local line_number=$1
+    local line_number=\$1
     log_error "Falha na linha ${line_number} (exit code: ${exit_code}). Verifique o log: ${LOG_FILE}"
     # Tenta remover arquivo local parcial para não ocupar espaço
     [[ -f "${BACKUP_PATH}" ]] && rm -f "${BACKUP_PATH}" && log_error "Arquivo local parcial removido: ${BACKUP_PATH}"
@@ -295,35 +301,41 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
 fi
 ```
 
-Estrutura e fluxo
+---
+
+### Estrutura e Fluxo
 
 O script é dividido em 6 funções com responsabilidade única, seguindo o princípio de separação de concerns — facilita manutenção e testes isolados.
 
-FunçãoResponsabilidadevalidate_environment
+| Função | Responsabilidade |
+|---|---|
+| `validate_environment` | Checa dependências, `PGPASSWORD`, espaço em disco |
+| `run_dump` | `pg_dump` com pipe direto para `gzip` |
+| `upload_to_s3` | `aws s3 cp` com storage class `STANDARD_IA` |
+| `cleanup_local` | Remove o `.sql.gz` local após upload |
+| `rotate_s3_backups` | Exclui objetos S3 com `LastModified` > 30 dias |
+| `handle_error` | Trap de `ERR` — loga linha, limpa arquivo parcial |
 
-Checa dependências, PGPASSWORD, espaço em discorun_dumppg_dump com pipe direto para gzipupload_to_s3aws s3 cp com storage class 
+---
 
-STANDARD_IAcleanup_local
+### Decisões de SRE
 
-Remove o .sql.gz local após uploadrotate_s3_backupsExclui objetos S3 com LastModified > 30 diashandle_errorTrap de ERR — loga linha, limpa arquivo parcial
+- **`set -euo pipefail`** — mais robusto que apenas `-e`; o `pipefail` captura falhas dentro do `pg_dump | gzip`, que de outra forma seriam silenciadas.
 
-Decisões de SRE
+- **Streaming sem arquivo intermediário** — o pipe `pg_dump | gzip > arquivo` evita escrever ~25-30 GB de SQL puro antes de compactar, crítico dado que o disco tem 80 GB livres e o dump compactado já é ~12 GB.
 
-set -euo pipefail — mais robusto que apenas -e; o pipefail captura falhas dentro do pg_dump | gzip, que de outra forma seriam silenciadas.
+- **`pg_dump --format=custom`** — formato binário nativo do PostgreSQL, mais compacto e restaurável com `pg_restore` com seleção de objetos.
 
-Streaming sem arquivo intermediário — o pipe pg_dump | gzip > arquivo evita escrever ~25-30 GB de SQL puro antes de compactar, crítico dado que o disco tem 80 GB livres e o dump compactado já é ~12 GB.
+- **`STANDARD_IA` no S3** — adequado para backups: custo de armazenamento menor, com custo de recuperação aceitável para um restore pontual.
 
-pg_dump --format=custom — formato binário nativo do PostgreSQL, mais compacto e restaurável com pg_restore com seleção de objetos.
+- **`s3api list-objects-v2` na rotação** — mais preciso que `aws s3 ls` para filtrar por data via query JMESPath.
 
-STANDARD_IA no S3 — adequado para backups: custo de armazenamento menor, com custo de recuperação aceitável para um restore pontual.
+---
 
-s3api list-objects-v2 na rotação — mais preciso que aws s3 ls para filtrar por data via query JMESPath.
+### Agendamento via Cron *(exemplo diário às 01h00 UTC)*
 
-
-Para agendar via cron (exemplo diário às 01h00 UTC):
-
-bash# Wrapper que busca a senha no Secrets Manager antes de chamar o script
-```
+```bash
+# Wrapper que busca a senha no Secrets Manager antes de chamar o script
 0 1 * * * root export PGPASSWORD=$(aws secretsmanager get-secret-value \
   --secret-id ledger/backup_user \
   --query SecretString \
@@ -331,10 +343,12 @@ bash# Wrapper que busca a senha no Secrets Manager antes de chamar o script
   --region us-east-1) && bash /opt/scripts/ledger_backup.sh
 ```
 
+---
+
 # Justificativa
 
-Role: Uma vez a role estabelecida, o modelo tem melhor direcionamento para a resposta do que for solicitado, nesse caso como temos EC2, optei por colocar um SRE especialista em cloud AWS.
+**Role:** Uma vez a role estabelecida, o modelo tem melhor direcionamento para a resposta do que for solicitado. Nesse caso, como temos EC2, optei por colocar um SRE especialista em Cloud AWS.
 
-Task: Solicitei criar um script com detalhes que dessem ao modelo a possibilidade de ser o mais acertivo possível. Como a role foi bem definida, a task veio bem completa.
+**Task:** Solicitei criar um script com detalhes que dessem ao modelo a possibilidade de ser o mais assertivo possível. Como a role foi bem definida, a task veio bem completa.
 
-Format: um Script bash comentado, utilizando melhores práticas, dando preferencia por functions.
+**Format:** Um script Bash comentado, utilizando melhores práticas, dando preferência por functions.
