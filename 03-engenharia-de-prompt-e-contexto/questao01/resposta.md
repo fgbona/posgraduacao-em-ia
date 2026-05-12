@@ -125,7 +125,9 @@ CMD ["gunicorn", \
 ```
 
 Decisões de design
+
 Multi-stage build
+
 A separação em dois stages (builder / runtime) é a prática mais importante aqui:
 
 O builder instala pip, compiladores e dependências de build — nada disso vai para produção
