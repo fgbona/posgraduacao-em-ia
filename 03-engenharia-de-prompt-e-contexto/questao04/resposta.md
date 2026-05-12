@@ -34,10 +34,10 @@ Ordenação final: mês crescente, depois categoria crescente.
 
 O relatório deverá ser entregue no formato markdown.
 
-## Modelo
+# Modelo
 Claude Haiku 4.5
 
-###### Output
+# Output
 Vou criar um relatório completo com a query SQL e o documento em markdown para o CEO.
 1. Query SQL
 Aqui está a query PostgreSQL que extrai os dados conforme especificado:
@@ -230,7 +230,7 @@ Formatação apropriada para entrega ao CEO
 
 Para completar o relatório: Execute a query no PostgreSQL e preencha os resultados na tabela de dados consolidados do markdown. O gerente poderá então entregar um documento completo e profissional ao CEO! 🚀
 
-###### Justificativa
+# Justificativa
 
 Task: A task contextualiza a demanda sobre o relatorio de crescimento dos ultimos 6 meses que o pm solicita.
 Action: Fornece o schema completo das tabelas transactions e customers, e as categorias, dando ao modelo contexto técnico para poder criar a query.
