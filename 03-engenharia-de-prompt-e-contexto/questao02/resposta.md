@@ -299,9 +299,13 @@ Estrutura e fluxo
 
 O script é dividido em 6 funções com responsabilidade única, seguindo o princípio de separação de concerns — facilita manutenção e testes isolados.
 
-FunçãoResponsabilidadevalidate_environmentCheca dependências, PGPASSWORD, espaço em discorun_dumppg_dump com pipe direto para gzipupload_to_s3aws s3 cp com storage class 
+FunçãoResponsabilidadevalidate_environment
 
-STANDARD_IAcleanup_localRemove o .sql.gz local após uploadrotate_s3_backupsExclui objetos S3 com LastModified > 30 diashandle_errorTrap de ERR — loga linha, limpa arquivo parcial
+Checa dependências, PGPASSWORD, espaço em discorun_dumppg_dump com pipe direto para gzipupload_to_s3aws s3 cp com storage class 
+
+STANDARD_IAcleanup_local
+
+Remove o .sql.gz local após uploadrotate_s3_backupsExclui objetos S3 com LastModified > 30 diashandle_errorTrap de ERR — loga linha, limpa arquivo parcial
 
 Decisões de SRE
 
