@@ -1,4 +1,4 @@
-###### Prompt
+# Prompt
 # Task
 Crie um relatório para o gerente, a ser entregue ao CEO, sobre o crescimento das transações nos últimos 6 meses. O gerente precisa dos números, porém, como não escreve SQL, enviou a solicitação ao Reactor, um sistema de mensageria.
 
@@ -34,7 +34,7 @@ Ordenação final: mês crescente, depois categoria crescente.
 
 O relatório deverá ser entregue no formato markdown.
 
-###### Modelo
+## Modelo
 Claude Haiku 4.5
 
 ###### Output
