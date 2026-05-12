@@ -1,8 +1,8 @@
-###### Prompt
-# Task
+# Prompt
+## Task
 Crie um relatório com sugestões de melhoria que resultem em uma economia de 15% no custo até o fim do período, sem comprometer o SLA. O relatório deverá ser elaborado de forma direcionada a um CEO.
 
-#Action
+## Action
 Analise o CSV abaixo com os custos do último mês de uso da nuvem AWS. Identifique os serviços de alto custo como prioritários.
 
 servico,categoria,custo_mensal_usd,uso_medio_pct,observacao
@@ -18,7 +18,8 @@ CloudWatch Metrics,observability,900,,
 Data Transfer Out,network,1900,,trafego entre regioes
 NAT Gateway,network,1200,,3 gateways ativos
 Lambda,compute,900,30,~12M invocacoes/mes
-#Goal
+
+## Goal
 O relatório precisa focar/demonstrar as oportunidades de economia:
 
 priorizadas por impacto
@@ -27,10 +28,10 @@ esforço de implementação (baixo, médio, alto)
 riscos ou pré-requisitos envolvidos em cada uma.
 O relatório deverá vir no formato markdown.
 
-###### Modelo
+# Modelo
 Claude Haiku 4.5
 
-###### Output
+# Output
 Vou analisar o CSV de custos AWS e criar um relatório executivo direcionado ao CEO com sugestões de economia de 15%.Análise inicial dos dados AWSAnálise inicial dos dados AWSPerfeito! Agora vou criar o relatório executivo em formato Markdown de alta qualidade:Relatório executivo de otimização de custos AWS para CEORelatório executivo de otimização de custos AWS para CEOPerfeito! Criei um relatório executivo completo em Markdown com análise profunda de otimização de custos AWS.
 📊 O Relatório Inclui:
 ✅ Estrutura Executiva (CEO-focused)
@@ -353,7 +354,7 @@ CONCLUSÃO
 A combinação das 5 iniciativas priorizadas resulta em economia de $7.860/mês (18,8%), superando a meta de 15% com risco controlado. A implementação sequencial (faseada) garante adoção segura sem impactos operacionais críticos.
 Próximo Passo: Aprovação executiva para iniciar Fase 1 (CloudWatch + EC2 analysis).
 
-###### Justificativa
+# Justificativa
 
 Task: Tarefa explicita de forma clara o que precisa ser feito, e direcionanento para o publico alvo do relatorio (CEO)
 Action: Analise dos dados do csv focando no maior custo para atingir o objetivo de economia do budget.
