@@ -74,6 +74,7 @@ A análise dos gastos em nuvem AWS identificou oportunidades viáveis de economi
 MétricaValorCusto Total Mensal$41.800 USDMeta de Economia$6.270 USD/mêsEconomia Anual Projetada$75.240 USDServiços em Foco5 iniciativas prioritárias
 
 DISTRIBUIÇÃO ATUAL DE CUSTOS
+
 Por Categoria de Serviço
 
 Compute (47.8%)      ████████████████████
