@@ -1,10 +1,12 @@
 # Prompt
+
 ## Task
 Crie um relatório com sugestões de melhoria que resultem em uma economia de 15% no custo até o fim do período, sem comprometer o SLA. O relatório deverá ser elaborado de forma direcionada a um CEO.
 
 ## Action
 Analise o CSV abaixo com os custos do último mês de uso da nuvem AWS. Identifique os serviços de alto custo como prioritários.
 
+```csv
 servico,categoria,custo_mensal_usd,uso_medio_pct,observacao
 EC2 reservada,compute,4200,72,contrato de 1 ano
 EC2 on-demand,compute,8200,45,workloads variaveis
@@ -18,351 +20,356 @@ CloudWatch Metrics,observability,900,,
 Data Transfer Out,network,1900,,trafego entre regioes
 NAT Gateway,network,1200,,3 gateways ativos
 Lambda,compute,900,30,~12M invocacoes/mes
+```
 
 ## Goal
 O relatório precisa focar/demonstrar as oportunidades de economia:
 
-priorizadas por impacto
-quanto cada uma representa em percentual da conta total
-esforço de implementação (baixo, médio, alto)
-riscos ou pré-requisitos envolvidos em cada uma.
+- Priorizadas por impacto
+- Quanto cada uma representa em percentual da conta total
+- Esforço de implementação (baixo, médio, alto)
+- Riscos ou pré-requisitos envolvidos em cada uma
+
 O relatório deverá vir no formato markdown.
 
+---
+
 # Modelo
-Claude Haiku 4.5
+
+**Claude Haiku 4.5**
+
+---
 
 # Output
-Vou analisar o CSV de custos AWS e criar um relatório executivo direcionado ao CEO com sugestões de economia de 15%.Análise inicial dos dados AWSAnálise inicial dos dados AWSPerfeito! Agora vou criar o relatório executivo em formato Markdown de alta qualidade:Relatório executivo de otimização de custos AWS para CEORelatório executivo de otimização de custos AWS para CEOPerfeito! Criei um relatório executivo completo em Markdown com análise profunda de otimização de custos AWS.
-📊 O Relatório Inclui:
-✅ Estrutura Executiva (CEO-focused)
 
-Sumário com números-chave ($6.270/mês = 15% economia)
-Visualização clara da distribuição de custos
-Foco em impacto financeiro vs. operacional
+> Vou analisar o CSV de custos AWS e criar um relatório executivo direcionado ao CEO com sugestões de economia de 15%.
 
-🎯 5 Iniciativas Priorizadas
+## RELATÓRIO DE OTIMIZAÇÃO DE CUSTOS AWS
+**Período:** Análise do Mês Atual  
+**Data de Elaboração:** Maio 2026  
+**Classificação:** Executivo
 
-EC2 On-Demand → $2.870/mês (6,9%) — Consolidação com Savings Plans
-RDS PostgreSQL → $2.050/mês (4,9%) — Downgrade multi-AZ
-EKS Clusters → $1.340/mês (3,2%) — Consolidação + Spot Instances
-CloudWatch Logs → $840/mês (2,0%) — Log tiering S3+Athena
-Data Transfer + NAT → $760/mês (1,8%) — CloudFront + VPC Endpoints
+---
 
-📋 Para Cada Iniciativa
+### SUMÁRIO EXECUTIVO
 
-Impacto: Valor em USD e % da conta
-Esforço: Baixo / Médio / Alto
-Riscos: Mapeados com mitigações
-Pré-requisitos: Claros e acionáveis
+A análise dos gastos em nuvem AWS identificou oportunidades viáveis de economia de 15%, equivalente a **$6.270 USD/mês** ou **$75.240 USD/ano**, sem comprometer os SLAs operacionais.
 
-📅 Plano Faseado (16 semanas)
+| Métrica | Valor |
+|---|---|
+| Custo Total Mensal | $41.800 USD |
+| Meta de Economia | $6.270 USD/mês |
+| Economia Anual Projetada | $75.240 USD |
+| Serviços em Foco | 5 iniciativas prioritárias |
 
-Fase 1: Quick wins (2 semanas)
-Fase 2-5: Implementação sequencial com zero downtime
+---
 
-💰 Resultado: $7.860/mês (18,8%) — Supera a meta em 25%
-O relatório está pronto em /mnt/user-data/outputs/relatorio_otimizacao_aws.md 📥
+### DISTRIBUIÇÃO ATUAL DE CUSTOS
 
+#### Por Categoria de Serviço
 
-RELATÓRIO DE OTIMIZAÇÃO DE CUSTOS AWS
-Período: Análise do Mês Atual
-Data de Elaboração: Maio 2026
-Classificação: Executivo
-
-SUMÁRIO EXECUTIVO
-A análise dos gastos em nuvem AWS identificou oportunidades viáveis de economia de 15%, equivalente a $6.270 USD/mês ou $75.240 USD/ano, sem comprometer os SLAs operacionais.
-MétricaValorCusto Total Mensal$41.800 USDMeta de Economia$6.270 USD/mêsEconomia Anual Projetada$75.240 USDServiços em Foco5 iniciativas prioritárias
-
-DISTRIBUIÇÃO ATUAL DE CUSTOS
-
-Por Categoria de Serviço
-
+```
 Compute (47.8%)      ████████████████████
-
 Databases (24.6%)    ███████████
-
 Storage (11.2%)      █████
-
 Observability (8.9%) ████
-
 Network (7.4%)       ███
+```
 
-Categorias de Maior Impacto:
+**Categorias de Maior Impacto:**
+- **Compute:** $20.000 USD (47,8%) — Prioridade Máxima
+- **Databases:** $10.300 USD (24,6%) — Prioridade Alta
 
-Compute: $20.000 USD (47,8%) — Prioridade Máxima
-Databases: $10.300 USD (24,6%) — Prioridade Alta
+---
 
+### OPORTUNIDADES DE ECONOMIA PRIORIZADAS
 
-OPORTUNIDADES DE ECONOMIA PRIORIZADAS
-1. EC2 On-Demand → Otimização de Workload Variável
-Impacto Potencial: $2.870 USD/mês (6,9% da conta)
-AspectoDetalhesCusto Atual$8.200 USDEconomia Estimada$2.870 USD/mês (+35%)Economia Anual$34.440 USD
-Análise:
+#### 1. EC2 On-Demand → Otimização de Workload Variável
 
-Utilização média de apenas 45% indica sobreprovisionamento significativo
-Combinação subótima: EC2 Reservada ($4.200) + On-Demand ($8.200)
-Oportunidade de consolidação mediante Savings Plans ou Reserved Instances
+**Impacto Potencial: $2.870 USD/mês (6,9% da conta)**
 
-Iniciativa Recomendada:
+| Aspecto | Detalhes |
+|---|---|
+| Custo Atual | $8.200 USD |
+| Economia Estimada | $2.870 USD/mês (+35%) |
+| Economia Anual | $34.440 USD |
 
-Fase 1 (Semana 1-2): Audit de utilização por instância com CloudWatch (identificar picos de demanda)
-Fase 2 (Semana 3): Consolidar workloads de baixa utilização (< 30%)
-Fase 3 (Semana 4): Converter 60% das on-demand em Savings Plans de 1 ano (28-32% desconto)
+**Análise:**
+- Utilização média de apenas **45%** indica sobreprovisionamento significativo
+- Combinação subótima: EC2 Reservada ($4.200) + On-Demand ($8.200)
+- Oportunidade de consolidação mediante Savings Plans ou Reserved Instances
 
-Esforço de Implementação: MÉDIO
+**Iniciativa Recomendada:**
+- **Fase 1 (Semana 1-2):** Audit de utilização por instância com CloudWatch (identificar picos de demanda)
+- **Fase 2 (Semana 3):** Consolidar workloads de baixa utilização (< 30%)
+- **Fase 3 (Semana 4):** Converter 60% das on-demand em Savings Plans de 1 ano (28-32% desconto)
 
-Requer análise de padrões de tráfego
-Validação de impacto em produção (zero downtime)
-Ajuste de auto-scaling policies
+**Esforço de Implementação: `MÉDIO`**
+- Requer análise de padrões de tráfego
+- Validação de impacto em produção (zero downtime)
+- Ajuste de auto-scaling policies
 
-Riscos e Pré-requisitos:
+**Riscos e Pré-requisitos:**
+- ⚠️ **Risco:** Inflexibilidade se workload muda drasticamente → Mitigar com Savings Plans (mais flexível que Reserved Instances)
+- ✅ **Pré-requisito:** Histórico de utilização de 30+ dias disponível
+- ✅ **Pré-requisito:** Tagging consistente de instâncias por projeto/ambiente
 
-⚠️ Risco: Inflexibilidade se workload muda drasticamente → Mitigar com Savings Plans (mais flexível que Reserved Instances)
-✓ Pré-requisito: Histórico de utilização de 30+ dias disponível
-✓ Pré-requisito: Tagging consistente de instâncias por projeto/ambiente
+---
 
+#### 2. RDS PostgreSQL — Otimização Multi-AZ
 
-2. RDS PostgreSQL — Otimização Multi-AZ
-Impacto Potencial: $2.050 USD/mês (4,9% da conta)
-AspectoDetalhesCusto Atual$8.200 USDEconomia Estimada$2.050 USD/mês (25%)Economia Anual$24.600 USD
-Análise:
+**Impacto Potencial: $2.050 USD/mês (4,9% da conta)**
 
-Utilização CPU/Memory: 62% em multi-AZ (custo premium de ~40% vs single-AZ)
-Oportunidade de downgrade de instance class ou revisão de HA strategy
-Data em multi-AZ pode ser redundante se existe backup automático + standby em aplicação
+| Aspecto | Detalhes |
+|---|---|
+| Custo Atual | $8.200 USD |
+| Economia Estimada | $2.050 USD/mês (25%) |
+| Economia Anual | $24.600 USD |
 
-Iniciativa Recomendada:
+**Análise:**
+- Utilização CPU/Memory: **62%** em multi-AZ (custo premium de ~40% vs single-AZ)
+- Oportunidade de downgrade de instance class ou revisão de HA strategy
+- Data em multi-AZ pode ser redundante se existe backup automático + standby em aplicação
 
-Opção A (Conservadora): Downgrade db.r5.2xlarge → db.r5.xlarge (~25% economia)
+**Iniciativa Recomendada:**
 
-Teste de carga em staging (validate 62% utilização sustentável em classe menor)
-Rollout em janela de manutenção com standby
+> **Opção A (Conservadora):** Downgrade `db.r5.2xlarge` → `db.r5.xlarge` (~25% economia)
+> - Teste de carga em staging (validate 62% utilização sustentável em classe menor)
+> - Rollout em janela de manutenção com standby
 
+> **Opção B (Agressiva):** Single-AZ + Auto Failover em aplicação
+> - Aplicável apenas se RTO/RPO < 5 minutos aceito
+> - Economia adicional 40%, mas riscos maiores
 
-Opção B (Agressiva): Single-AZ + Auto Failover em aplicação
+**Esforço de Implementação: `MÉDIO-ALTO`**
+- Requer teste de carga em staging
+- Validação de tempos de query com instância menor
+- Coordenação com time de aplicação para janela de downtime (~15 min)
 
-Aplicável apenas se RTO/RPO < 5 minutos aceito
-Economia adicional 40%, mas riscos maiores
+**Riscos e Pré-requisitos:**
+- ⚠️ **Risco Crítico:** Degradação de performance em picos → Mitigar com teste de carga prévio
+- ⚠️ **Risco:** Violação de SLA se RDS ficar indisponível → Validar SLA atual (uptime garantido)
+- ✅ **Pré-requisito:** Ambiente staging idêntico ao prod disponível
+- ✅ **Pré-requisito:** Baseline de performance documentada
 
+---
 
+#### 3. EKS — Otimização de Clusters
 
-Esforço de Implementação: MÉDIO-ALTO
+**Impacto Potencial: $1.340 USD/mês (3,2% da conta)**
 
-Requer teste de carga em staging
-Validação de tempos de query com instância menor
-Coordenação com time de aplicação para janela de downtime (~15 min)
+| Aspecto | Detalhes |
+|---|---|
+| Custo Atual | $6.700 USD |
+| Economia Estimada | $1.340 USD/mês (20%) |
+| Economia Anual | $16.080 USD |
 
-Riscos e Pré-requisitos:
+**Análise:**
+- 3 clusters com utilização média **58%**
+- Clustering overhead: 3 control planes = custo fixo de ~$1.200/mês (17%)
+- Oportunidade: consolidar clusters ou otimizar node sizing
 
-⚠️ Risco Crítico: Degradação de performance em picos → Mitigar com teste de carga prévio
-⚠️ Risco: Violação de SLA se RDS ficar indisponível → Validar SLA atual (uptime garantido)
-✓ Pré-requisito: Ambiente staging idêntico ao prod disponível
-✓ Pré-requisito: Baseline de performance documentada
+**Iniciativa Recomendada:**
 
+**Análise Prévia (1-2 semanas):** Mapear workloads por cluster
+- Cluster 1: Prod crítico (uptime 99,99%)
+- Cluster 2: Staging/Dev (uptime 95%)
+- Cluster 3: Batch/Analytics (uptime 99%)
+
+**Opção Preferida:** Consolidar Staging + Batch em 2 clusters com namespaces isolados
+- Reduz control planes de 3 para 2 (economia: $300-400/mês)
+- Otimização de node pools (usar Spot Instances para Batch: economia +$500-600/mês)
+
+**Node Sizing:**
+- Batch workloads: 100% Spot (até 90% desconto, tolerância a interrupções)
+- Dev/Staging: 70% Spot + 30% on-demand
+
+**Esforço de Implementação: `ALTO`**
+- Requer planejamento arquitetural
+- Testes extensivos de isolamento de namespaces
+- Validação de SLA por workload
+
+**Riscos e Pré-requisitos:**
+- ⚠️ **Risco Alto:** Consolidação inadequada → violação de isolamento → Mitigar com RBAC + Network Policies rigorosas
+- ⚠️ **Risco:** Interrupções Spot inesperadas em workloads críticos → Mitigar com Pod Disruption Budgets
+- ✅ **Pré-requisito:** Mapa de workloads e SLA por aplicação
+- ✅ **Pré-requisito:** Implementação de Karpenter ou Cluster Autoscaler otimizado
 
-3. EKS — Otimização de Clusters
-Impacto Potencial: $1.340 USD/mês (3,2% da conta)
-AspectoDetalhesCusto Atual$6.700 USDEconomia Estimada$1.340 USD/mês (20%)Economia Anual$16.080 USD
-Análise:
+---
+
+#### 4. CloudWatch Logs — Retenção Otimizada
+
+**Impacto Potencial: $840 USD/mês (2,0% da conta)**
+
+| Aspecto | Detalhes |
+|---|---|
+| Custo Atual | $2.800 USD |
+| Economia Estimada | $840 USD/mês (30%) |
+| Economia Anual | $10.080 USD |
+
+**Análise:**
+- Retenção atual: **90 dias** em CloudWatch Logs (premium)
+- Logs arquivados após 90 dias: não consultados em operações diárias
+- Custo de armazenamento CloudWatch: ~$0,50/GB ingestion + $0,03/GB retention
+
+**Implementar Log Tiering:**
+
+| Tier | Período | Solução | Benefício |
+|---|---|---|---|
+| Quentes | 30 dias | CloudWatch Logs | Consultas frequentes, alertas |
+| Mornos | 60 dias | S3 + Athena | Compliance, audits (~75% mais barato) |
+| Frios | 365+ dias | Glacier Deep Archive | Retenção legal |
+
+**Automação (1 semana):**
+- Lambda + EventBridge: exportar logs dia X+30 → S3 (custo: ~$20/mês)
+- Configurar S3 Lifecycle Policy → Glacier após 90 dias
+- Alertas em CloudWatch: apenas logs críticos (ERROR, CRITICAL)
+
+**Redução de Verbosidade:**
+- Debug logs: rotação após 7 dias (ambiente dev)
+- Info logs: rotação após 30 dias
+- Warn/Error: mantém 90 dias
+
+**Esforço de Implementação: `BAIXO-MÉDIO`**
+- Requer setup de Lambda + S3 + Athena queries
+- Sem impacto em aplicações
+- Tempo: 1-2 semanas para implementação completa
+
+**Riscos e Pré-requisitos:**
+- ✅ Sem risco crítico — CloudWatch Logs mantém 30 dias quentes
+- ⚠️ **Risco Menor:** Queries em S3 mais lentas que CloudWatch (~5-10s vs <1s)
+- ✅ **Pré-requisito:** Análise de logs consultados >30 dias (audit de queries)
+- ✅ **Pré-requisito:** S3 bucket com acesso controlado
+
+---
+
+#### 5. Data Transfer Out + NAT Gateway — Otimização de Tráfego
+
+**Impacto Potencial: $760 USD/mês (1,8% da conta)**
+
+| Aspecto | Detalhes |
+|---|---|
+| Custo Atual | $3.100 USD (Data Transfer + NAT) |
+| Economia Estimada | $760 USD/mês (25%) |
+| Economia Anual | $9.120 USD |
+
+**Análise:**
+- Data Transfer Out: $1.900/mês (tráfego entre regiões)
+- NAT Gateway: $1.200/mês (3 gateways, $0,32/hora + processamento)
+- Tráfego inter-região: possível consolidação via VPC Peering ou Private Link
+
+**Data Transfer Out (Reduzir ~30%):**
+- Implementar CloudFront para assets estáticos (CDN reduz tráfego inter-região)
+- Consolidar databases: evitar replicação multi-região desnecessária
+- Usar AWS DataSync ou Direct Connect para grandes transferências (50% desconto)
 
-3 clusters com utilização média 58%
-Clustering overhead: 3 control planes = custo fixo de ~$1.200/mês (17%)
-Oportunidade: consolidar clusters ou otimizar node sizing
+**NAT Gateway (Reduzir ~40%):**
+- Otimizar roteamento: nem todo tráfego precisa de NAT
+- Usar NAT Instance em spot (30% do custo de Gateway) para non-critical workloads
+- Implementar VPC Endpoints para AWS services (S3, DynamoDB, etc.) — elimina NAT
 
-Iniciativa Recomendada:
+**Esforço de Implementação: `MÉDIO`**
+- CloudFront: setup mínimo (1 semana)
+- VPC Endpoints: implementação por serviço (2-3 semanas)
+- NAT optimization: requer revisão de routing policies
 
-Análise Prévia (1-2 semanas): Mapear workloads por cluster
+**Riscos e Pré-requisitos:**
+- ⚠️ **Risco:** CloudFront cache stale → Mitigar com TTL apropriado + invalidation policy
+- ✅ **Pré-requisito:** Mapa de tráfego inter-região (egress analysis)
+- ✅ **Pré-requisito:** Identificação de AWS services acessados (S3, DynamoDB, etc.)
 
-Cluster 1: Prod crítico (uptime 99,99%)
-Cluster 2: Staging/Dev (uptime 95%)
-Cluster 3: Batch/Analytics (uptime 99%)
+---
 
+### OPORTUNIDADES SECUNDÁRIAS *(Não Incluídas na Meta)*
 
-Opção Preferida: Consolidar Staging + Batch em 2 clusters com namespaces isolados
+| Serviço | Potencial | Esforço | Observação |
+|---|---|---|---|
+| ElastiCache | $315/mês (3%) | Médio | Downgrade cluster ou implementar local cache |
+| S3 Standard | $310/mês (2%) | Baixo | Lifecycle policy → Intelligent-Tiering |
+| EBS gp3 | $160/mês (1%) | Baixo | Downgrade para gp2 em volumes de baixa IOPS |
+| Lambda | $180/mês (1%) | Baixo | Otimização de memória/runtime |
 
-Reduz control planes de 3 para 2 (economia: $300-400/mês)
-Otimização de node pools (usar Spot Instances para Batch: economia +$500-600/mês)
+---
 
+### PLANO DE IMPLEMENTAÇÃO (Roadmap)
 
-Node Sizing: Migrar para on-demand mais compactas ou Spot Instances
+#### Fase 1: Quick Wins *(Semana 1-2)*
+- **Iniciativa:** CloudWatch Logs tiering + S3 Lifecycle
+- **Economia:** $840/mês | **Risco:** Baixo
+- **Proprietário:** Cloud Platform Team
+- **Status:** ✅ Prioritário
 
-Batch workloads: 100% Spot (até 90% desconto, tolerância a interrupciones)
-Dev/Staging: 70% Spot + 30% on-demand
+#### Fase 2: Medium-Term *(Semana 3-4)*
+- **Iniciativa:** EC2 On-Demand otimização + Savings Plans
+- **Economia:** $2.870/mês | **Risco:** Médio
+- **Proprietário:** Infrastructure Team
+- **Pré-requisito:** Análise de utilização por instância
 
+#### Fase 3: Medium-Term *(Semana 5-8)*
+- **Iniciativa:** RDS PostgreSQL downgrade + validação de performance
+- **Economia:** $2.050/mês | **Risco:** Médio-Alto
+- **Proprietário:** Database + Application Teams (coordenação)
+- **Pré-requisito:** Teste de carga em staging com sucesso
 
+#### Fase 4: Long-Term *(Semana 9-16)*
+- **Iniciativa:** EKS consolidação + Spot optimization
+- **Economia:** $1.340/mês | **Risco:** Alto
+- **Proprietário:** Kubernetes Platform Team
+- **Pré-requisito:** Mapa completo de workloads e SLAs
 
-Esforço de Implementação: ALTO
+#### Fase 5: Paralelo *(Durante todas as fases)*
+- **Iniciativa:** Data Transfer + NAT Gateway otimização
+- **Economia:** $760/mês | **Risco:** Médio
+- **Proprietário:** Network Team
 
-Requer planejamento arquitetural
-Testes extensivos de isolamento de namespaces
-Validação de SLA por workload
+---
 
-Riscos e Pré-requisitos:
+### RESUMO FINANCEIRO
 
-⚠️ Risco Alto: Consolidação inadequada → violação de isolamento → Mitigar com RBAC + Network Policies rigorosas
-⚠️ Risco: Interrupções Spot inesperadas em workloads críticos → Mitigar com Pod Disruption Budgets
-✓ Pré-requisito: Mapa de workloads e SLA por aplicação
-✓ Pré-requisito: Implementação de Karpenter ou Cluster Autoscaler otimizado
+| Iniciativa | Mensal | Anual | Acumulado Mensal |
+|---|---|---|---|
+| CloudWatch Logs | $840 | $10.080 | $840 |
+| EC2 On-Demand | $2.870 | $34.440 | $3.710 |
+| RDS PostgreSQL | $2.050 | $24.600 | $5.760 |
+| Data Transfer + NAT | $760 | $9.120 | $6.520 |
+| EKS Clusters | $1.340 | $16.080 | $7.860 |
+| **TOTAL** | **$7.860** | **$94.320** | **$7.860** |
 
+> **Meta Original:** $6.270/mês (15%)  
+> **Resultado Projetado:** $7.860/mês **(18,8% — supera a meta em 25%)** ✅
 
-4. CloudWatch Logs — Retenção Otimizada
-Impacto Potencial: $840 USD/mês (2,0% da conta)
-AspectoDetalhesCusto Atual$2.800 USDEconomia Estimada$840 USD/mês (30%)Economia Anual$10.080 USD
-Análise:
+---
 
-Retenção atual: 90 dias em CloudWatch Logs (premium)
-Logs arquivados após 90 dias: não consultados em operações diárias
-Custo de armazenamento CloudWatch: ~$0,50/GB ingestion + $0,03/GB retention
+### MÉTRICAS DE SUCESSO
 
-Iniciativa Recomendada:
+- 📊 **Métrica Financeira:** Redução de 15%+ na conta AWS mensal
+- ⚙️ **Métrica Operacional:** Zero violações de SLA durante otimizações
+- 🚀 **Métrica de Performance:** P99 latency ≤ baseline para todos os serviços
+- 🔒 **Métrica de Conformidade:** Logs mantêm retenção conforme política de compliance
 
-Implementar Log Tiering:
+---
 
-Quentes (30 dias): CloudWatch Logs — consultas frequentes, alertas
-Mornos (60 dias): S3 + Athena — compliance, audits ocasionais (~75% mais barato)
-Frios (365+ dias): Glacier Deep Archive — retenção legal
+### RECOMENDAÇÕES FINAIS
 
+1. **Governança:** Implementar AWS Budgets + Cost Allocation Tags para monitoramento contínuo
+2. **Automação:** Adotar ferramentas como Finops ou CloudHealth para relatórios mensais
+3. **Cultura:** Treinar teams em cost optimization — reservar 10% do sprint para iniciativas de economia
+4. **Revisão:** Realizar análise trimestral de custos com stakeholders
 
-Automação (1 semana):
+---
 
-Lambda + EventBridge: exportar logs dia X+30 → S3 (custo: ~$20/mês)
-Configurar S3 Lifecycle Policy → Glacier após 90 dias
-Alertas em CloudWatch: apenas logs críticos (ERROR, CRITICAL)
+### CONCLUSÃO
 
+A combinação das **5 iniciativas priorizadas** resulta em economia de **$7.860/mês (18,8%)**, superando a meta de 15% com risco controlado. A implementação sequencial (faseada) garante adoção segura sem impactos operacionais críticos.
 
-Redução de Verbosidade:
+> **Próximo Passo:** Aprovação executiva para iniciar **Fase 1** (CloudWatch + EC2 analysis).
 
-Debug logs: rotação após 7 dias (ambiente dev)
-Info logs: rotação após 30 dias
-Warn/Error: mantém 90 dias
-
-
-
-Esforço de Implementação: BAIXO-MÉDIO
-
-Requer setup de Lambda + S3 + Athena queries
-Sem impacto em aplicações
-Tempo: 1-2 semanas para implementação completa
-
-Riscos e Pré-requisitos:
-
-✓ Sem risco crítico — CloudWatch Logs mantém 30 dias quentes
-⚠️ Risco Menor: Queries em S3 mais lentas que CloudWatch (~5-10s vs <1s)
-✓ Pré-requisito: Análise de logs consultados >30 dias (audit de queries)
-✓ Pré-requisito: S3 bucket com acesso controlado
-
-
-5. Data Transfer Out + NAT Gateway — Otimização de Tráfego
-Impacto Potencial: $760 USD/mês (1,8% da conta)
-AspectoDetalhesCusto Atual$3.100 USD (Data Transfer + NAT)Economia Estimada$760 USD/mês (25%)Economia Anual$9.120 USD
-Análise:
-
-Data Transfer Out: $1.900/mês (tráfego entre regiões)
-NAT Gateway: $1.200/mês (3 gateways, $0,32/hora + processamento)
-Tráfego inter-região: possível consolidação via VPC Peering ou Private Link
-
-Iniciativa Recomendada:
-
-Data Transfer Out (Reduzir ~30%):
-
-Implementar CloudFront para assets estáticos (CDN reduz tráfego inter-região)
-Consolidar databases: evitar replicação multi-região desnecessária
-Usar AWS DataSync ou Direct Connect para grandes transferências (50% desconto)
-
-
-NAT Gateway (Reduzir ~40%):
-
-Otimizar roteamento: nem todo tráfego precisa de NAT
-Usar NAT Instance em spot (30% do custo de Gateway) para non-critical workloads
-Implementar VPC Endpoints para AWS services (S3, DynamoDB, etc.) — elimina NAT
-
-
-
-Esforço de Implementação: MÉDIO
-
-CloudFront: setup mínimo (1 semana)
-VPC Endpoints: implementação por serviço (2-3 semanas)
-NAT optimization: requer revisão de routing policies
-
-Riscos e Pré-requisitos:
-
-⚠️ Risco: CloudFront cache stale → Mitigar com TTL apropriado + invalidation policy
-✓ Pré-requisito: Mapa de tráfego inter-região (egress analysis)
-✓ Pré-requisito: Identificação de AWS services acessados (S3, DynamoDB, etc.)
-
-
-OPORTUNIDADES SECUNDÁRIAS (Não Incluídas na Meta)
-ServiçoPotencialEsforçoObservaçãoElastiCache$315/mês (3%)MédioDowngrade cluster ou implementar local cacheS3 Standard$310/mês (2%)BaixoLifecycle policy → Intelligent-TieringEBS gp3$160/mês (1%)BaixoDowngrade para gp2 em volumes de baixa IOPSLambda$180/mês (1%)BaixoOtimização de memória/runtime
-
-PLANO DE IMPLEMENTAÇÃO (Roadmap)
-Fase 1: Quick Wins (Semana 1-2)
-
-Iniciativa: CloudWatch Logs tiering + S3 Lifecycle
-Economia: $840/mês
-Risco: Baixo
-Proprietário: Cloud Platform Team
-Status: ✅ Prioritário
-
-Fase 2: Medium-Term (Semana 3-4)
-
-Iniciativa: EC2 On-Demand otimização + Savings Plans
-Economia: $2.870/mês
-Risco: Médio
-Proprietário: Infrastructure Team
-Pré-requisito: Análise de utilização por instância
-
-Fase 3: Medium-Term (Semana 5-8)
-
-Iniciativa: RDS PostgreSQL downgrade + validação de performance
-Economia: $2.050/mês
-Risco: Médio-Alto
-Proprietário: Database + Application Teams (coordenação)
-Pré-requisito: Teste de carga em staging com sucesso
-
-Fase 4: Long-Term (Semana 9-16)
-
-Iniciativa: EKS consolidação + Spot optimization
-Economia: $1.340/mês
-Risco: Alto
-Proprietário: Kubernetes Platform Team
-Pré-requisito: Mapa completo de workloads e SLAs
-
-Fase 5: Paralelo (Durante todas as fases)
-
-Iniciativa: Data Transfer + NAT Gateway otimização
-Economia: $760/mês
-Risco: Médio
-Proprietário: Network Team
-
-
-RESUMO FINANCEIRO
-Economia Total Projetada
-IniciativaMensalAnualAcumulado MensalCloudWatch Logs$840$10.080$840EC2 On-Demand$2.870$34.440$3.710RDS PostgreSQL$2.050$24.600$5.760Data Transfer + NAT$760$9.120$6.520EKS Clusters$1.340$16.080$7.860TOTAL$7.860$94.320$7.860
-Meta Original: $6.270/mês (15%)
-Resultado Projetado: $7.860/mês (18,8% acima da meta) ✅
-
-MÉTRICAS DE SUCESSO
-
-Métrica Financeira: Redução de 15%+ na conta AWS mensal
-Métrica Operacional: Zero violações de SLA durante otimizações
-Métrica de Performance: P99 latency ≤ baseline para todos os serviços
-Métrica de Conformidade: Logs mantêm retenção conforme política de compliance
-
-
-RECOMENDAÇÕES FINAIS
-
-Governança: Implementar AWS Budgets + Cost Allocation Tags para monitoramento contínuo
-Automação: Adotar ferramentas como Finops ou CloudHealth para relatórios mensais
-Cultura: Treinar teams em cost optimization — reservar 10% do sprint para iniciativas de economia
-Revisão: Realizar análise trimestral de custos com stakeholders
-
-
-CONCLUSÃO
-A combinação das 5 iniciativas priorizadas resulta em economia de $7.860/mês (18,8%), superando a meta de 15% com risco controlado. A implementação sequencial (faseada) garante adoção segura sem impactos operacionais críticos.
-Próximo Passo: Aprovação executiva para iniciar Fase 1 (CloudWatch + EC2 analysis).
+---
 
 # Justificativa
 
-Task: Tarefa explicita de forma clara o que precisa ser feito, e direcionanento para o publico alvo do relatorio (CEO)
-Action: Analise dos dados do csv focando no maior custo para atingir o objetivo de economia do budget.
-Goal: O relatorio detalha as oportunidades de economia, que com o resultado superam os 15% iniciais mencionados.
+**Task:** A tarefa explica de forma clara o que precisa ser feito e o direcionamento para o público-alvo do relatório (CEO).
+
+**Action:** Análise dos dados do CSV focando no maior custo para atingir o objetivo de economia do budget.
+
+**Goal:** O relatório detalha as oportunidades de economia que, com o resultado, superam os 15% iniciais mencionados.
