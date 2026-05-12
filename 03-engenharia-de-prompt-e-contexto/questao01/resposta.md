@@ -159,5 +159,7 @@ O HEALTHCHECK instrui o Docker runtime (e o Kubernetes, se você não usar liven
 # Justificativa
 
 Role: Defini que a role deveria ser um desenvolvedor senior, especialista em Kubernetes e docker pela experiencia necessaria e complexidade do contexto.
+
 Task: Dei um contexto mais simplorio, dando algumas informações úteis para que o modelo pudesse ser o mais acertivo possível em sua resposta, como onde eu estou e para onde quero ir.
+
 Format: Arquivo docker seguindo as boas praticas de infraestrutura e segurança mais explicação sobre a decisão de design definido, contento multi-stage building, segurança, sinais e graceful shutdown, cache de layers otimizado e healthcheck.
