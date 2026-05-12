@@ -76,10 +76,15 @@ MétricaValorCusto Total Mensal$41.800 USDMeta de Economia$6.270 USD/mêsEconomi
 DISTRIBUIÇÃO ATUAL DE CUSTOS
 Por Categoria de Serviço
 Compute (47.8%)      ████████████████████
+
 Databases (24.6%)    ███████████
+
 Storage (11.2%)      █████
+
 Observability (8.9%) ████
+
 Network (7.4%)       ███
+
 Categorias de Maior Impacto:
 
 Compute: $20.000 USD (47,8%) — Prioridade Máxima
