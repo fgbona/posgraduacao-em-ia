@@ -1,8 +1,8 @@
-###### Prompt
-# Role
+# Prompt
+## Role
 Você é um SRE sênior especialista em Cloud AWS.
 
-#Task
+## Task
 
 Crie um script em Bash para fazer backup de uma database postgresql na AWS que roda em uma EC2. O script precisa de seguir uma ordem passo a passo:
 
@@ -24,14 +24,15 @@ Segue as variáveis do ambiente:
 * SO da instância: Ubuntu 22.04 LTS
 * Diretório de trabalho com 80 GB livres: `/var/backups/ledger`
 * Tamanho médio atual do dump compactado: ~12 GB
-#Format
+
+## Format
 O script bash deve ser comentado em cada instrução feita para ter melhor qualidade para dar manutenção. Prefira o uso de functions, se for parte das melhores práticas.
 
-###### Modelo
+# Modelo
 Claude sonnet 4.6
 
-###### Output
-
+# Output
+```
 #!/usr/bin/env bash
 # =============================================================================
 # ledger_backup.sh
@@ -292,7 +293,7 @@ main() {
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     main "$@"
 fi
-
+```
 
 Estrutura e fluxo
 O script é dividido em 6 funções com responsabilidade única, seguindo o princípio de separação de concerns — facilita manutenção e testes isolados.
@@ -315,7 +316,7 @@ bash# Wrapper que busca a senha no Secrets Manager antes de chamar o script
   --output text \
   --region us-east-1) && bash /opt/scripts/ledger_backup.sh
 
-###### Justificativa
+# Justificativa
 Role: Uma vez a role estabelecida, o modelo tem melhor direcionamento para a resposta do que for solicitado, nesse caso como temos EC2, optei por colocar um SRE especialista em cloud AWS.
 Task: Solicitei criar um script com detalhes que dessem ao modelo a possibilidade de ser o mais acertivo possível. Como a role foi bem definida, a task veio bem completa.
 Format: um Script bash comentado, utilizando melhores práticas, dando preferencia por functions.
