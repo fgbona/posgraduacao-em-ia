@@ -4,9 +4,10 @@
 Você é um engenheiro DevOps/SRE sênior especialista em containerização Docker e deploy em Kubernetes.
 
 ## Task
-Tenho um sistema chamado Lift que está rodando em VM atualmente e deve ser migrado para Kubernetes. Na vm, o codigo atualmente rodando é uma API Python/Flask na porta 8080, dependências declaradas em requirements.txt, e duas variáveis de ambiente que precisam estar presentes no runtime, DATABASE_URL e API_KEY. Em produção o serviço sobe com gunicorn --bind 0.0.0.0:8080 --workers 4 app:app.
+Tenho um sistema chamado Lift que está rodando em VM atualmente e deve ser migrado para Kubernetes. Na VM, o código atualmente rodando é uma API Python/Flask na porta 8080, dependências declaradas em `requirements.txt`, e duas variáveis de ambiente que precisam estar presentes no runtime, `DATABASE_URL` e `API_KEY`. Em produção o serviço sobe com `gunicorn --bind 0.0.0.0:8080 --workers 4 app:app`.
 
 Estrutura do projeto:
+
 ```
 lift/
 ├── app.py
@@ -17,8 +18,9 @@ lift/
 └── tests/
     └── test_app.py
 ```
+
 ```
-requirements.txt
+# requirements.txt
 
 Flask==3.0.0
 gunicorn==21.2.0
@@ -26,16 +28,21 @@ requests==2.31.0
 python-dotenv==1.0.0
 psycopg2-binary==2.9.9
 ```
+
 ## Format
 Crie um Dockerfile para rodar o projeto com as melhores práticas de infraestrutura e segurança.
 
+---
 
 # Modelo
-Claude sonnet 4.6
 
+**Claude Sonnet 4.6**
+
+---
 
 # Output
-```
+
+```dockerfile
 # =============================================================================
 # Stage 1: builder
 # Instala dependências em ambiente isolado para não contaminar a imagem final
@@ -77,7 +84,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         libpq5 \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/
 
 # Cria usuário e grupo sem privilégios
 # -r = system account, -g = grupo, -s /sbin/nologin = sem shell interativo
@@ -124,42 +131,45 @@ CMD ["gunicorn", \
      "app:app"]
 ```
 
-Decisões de design
+---
 
-Multi-stage build
+### Decisões de Design
 
-A separação em dois stages (builder / runtime) é a prática mais importante aqui:
+#### Multi-stage Build
 
-O builder instala pip, compiladores e dependências de build — nada disso vai para produção
-O runtime copia apenas os .whl já instalados, resultando numa imagem final significativamente menor e com menor superfície de ataque
+A separação em dois stages (`builder` / `runtime`) é a prática mais importante aqui:
 
-Segurança
-```
-Prática                                         Motivo
-Usuário lift sem privilégios                    Containment: processo não roda como root
-/sbin/nologin no useradd                        Sem shell interativo — impossível docker exec -it ... /bin/bash acidentalmente
-tests/ não copiado                              Código de teste não tem lugar em produção
-Sem ENV DATABASE_URL / ENV API_KEY              Segredos são injetados pelo K8s em runtime; valor hardcoded no Dockerfile vaza via docker inspect e docker history
-apt-get clean && rm -rf /var/lib/apt/lists/*    Reduz tamanho e elimina metadados de pacotes desnecessários
-```
+- O `builder` instala pip, compiladores e dependências de build — nada disso vai para produção
+- O `runtime` copia apenas os `.whl` já instalados, resultando numa imagem final significativamente menor e com menor superfície de ataque
 
-Sinais e graceful shutdown
+#### Segurança
 
-O CMD usa exec form (array JSON) em vez de shell form (CMD "gunicorn ..."). Com shell form, o PID 1 seria /bin/sh, e o SIGTERM do Kubernetes no rolling update não chegaria ao Gunicorn — o pod seria encerrado forçosamente após o terminationGracePeriodSeconds. Com exec form, o Gunicorn é o PID 1 e trata o sinal corretamente.
+| Prática | Motivo |
+|---|---|
+| Usuário `lift` sem privilégios | Containment: processo não roda como `root` |
+| `/sbin/nologin` no `useradd` | Sem shell interativo — impossível `docker exec -it ... /bin/bash` acidentalmente |
+| `tests/` não copiado | Código de teste não tem lugar em produção |
+| Sem `ENV DATABASE_URL` / `ENV API_KEY` | Segredos são injetados pelo K8s em runtime; valor hardcoded no Dockerfile vaza via `docker inspect` e `docker history` |
+| `apt-get clean && rm -rf /var/lib/apt/lists/*` | Reduz tamanho e elimina metadados de pacotes desnecessários |
 
-Cache de layers otimizado
+#### Sinais e Graceful Shutdown
 
-O COPY requirements.txt . vem antes do COPY app.py, porque o requirements muda com muito menos frequência que o código. O Docker reusa a layer do pip install a menos que o arquivo de dependências mude — builds iterativos ficam muito mais rápidos.
+O `CMD` usa **exec form** (array JSON) em vez de **shell form** (`CMD "gunicorn ..."`). Com shell form, o PID 1 seria `/bin/sh`, e o `SIGTERM` do Kubernetes no rolling update não chegaria ao Gunicorn — o pod seria encerrado forçosamente após o `terminationGracePeriodSeconds`. Com exec form, o Gunicorn é o PID 1 e trata o sinal corretamente.
 
-Healthcheck
+#### Cache de Layers Otimizado
 
-O HEALTHCHECK instrui o Docker runtime (e o Kubernetes, se você não usar liveness probe no manifest) a verificar a saúde do container. Para o K8s, o recomendado é configurar livenessProbe e readinessProbe no Deployment — o healthcheck do Dockerfile é um fallback útil para ambientes sem orquestração.
+O `COPY requirements.txt .` vem antes do `COPY app.py`, porque o `requirements` muda com muito menos frequência que o código. O Docker reusa a layer do `pip install` a menos que o arquivo de dependências mude — builds iterativos ficam muito mais rápidos.
 
+#### Healthcheck
+
+O `HEALTHCHECK` instrui o Docker runtime (e o Kubernetes, se você não usar `liveness probe` no manifest) a verificar a saúde do container. Para o K8s, o recomendado é configurar `livenessProbe` e `readinessProbe` no Deployment — o healthcheck do Dockerfile é um fallback útil para ambientes sem orquestração.
+
+---
 
 # Justificativa
 
-Role: Defini que a role deveria ser um desenvolvedor senior, especialista em Kubernetes e docker pela experiencia necessaria e complexidade do contexto.
+**Role:** Defini que a role deveria ser um desenvolvedor sênior, especialista em Kubernetes e Docker pela experiência necessária e complexidade do contexto.
 
-Task: Dei um contexto mais simplorio, dando algumas informações úteis para que o modelo pudesse ser o mais acertivo possível em sua resposta, como onde eu estou e para onde quero ir.
+**Task:** Dei um contexto mais simplório, fornecendo algumas informações úteis para que o modelo pudesse ser o mais assertivo possível em sua resposta, como onde estou e para onde quero ir.
 
-Format: Arquivo docker seguindo as boas praticas de infraestrutura e segurança mais explicação sobre a decisão de design definido, contento multi-stage building, segurança, sinais e graceful shutdown, cache de layers otimizado e healthcheck.
+**Format:** Arquivo Docker seguindo as boas práticas de infraestrutura e segurança, mais explicação sobre as decisões de design definidas, contendo multi-stage build, segurança, sinais e graceful shutdown, cache de layers otimizado e healthcheck.
