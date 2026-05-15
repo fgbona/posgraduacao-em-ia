@@ -42,7 +42,7 @@ Para atender à padronização atual da empresa, a nova versão precisa ter:
 - `securityContext` não root
 
 ## Bridge
-Crie o novo código do deployment que atenda às padronizações da empresa, inclusive seguindo as boas práticas do CIS Kubernetes Benchmark, visto que essa aplicação é a porta de entrada principal de dados.
+Crie o novo código do deployment que atenda às padronizações da empresa, inclusive seguindo as boas práticas do CIS Kubernetes Benchmark, visto que essa aplicação é a porta de entrada principal de dados. Tudo, e literalmente tudo, deverá ser gerado em um único arquivo em Markdown.
 
 ---
 
