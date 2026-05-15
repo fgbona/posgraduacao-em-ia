@@ -167,3 +167,7 @@ A v2.48.0 subiu **fora do pico** (18:42 UTC de ontem). O bug é latente e só se
 Não é capacidade, é regressão arquitetural client-side da v2.48.0 que só aparece em pico. **Rollback resolve em 5 min com risco baixo. Scaling resolve em 30 min com risco alto e talvez não resolva. Rollback agora, autópsia depois.**
 
 # Justificativa
+O framework escolhido foi o C-A-R-E, por ser o mais adequado a cenários em que o contexto é rico e estruturado e o output é um documento técnico com formato definido. O Context concentra todos os artefatos do incidente: changelog do deploy, métricas do Beacon, logs do pod, estado do Reactor e do cluster — fornecendo ao modelo toda a evidência necessária para análise. A Action instrui o modelo a analisar os artefatos e produzir o post-mortem. O Result define o conteúdo esperado: causa raiz, recomendação entre rollback vs scaling e justificativa técnica. O exemplo especifica o formato Markdown com as seções obrigatórias: timeline, root cause, impacto e decisão recomendada.
+
+Não escolhi o R-T-F porque não comporta a riqueza dos dados de entrada. O contexto do C-A-R-E é essencial para organizar os artefatos.
+Não escolhi o R-I-S-E porque o cenário não pede um procedimento passo a passo, mas uma decisão técnica fundamentada, que o resultado do C-A-R-E captura com mais acertividade.
