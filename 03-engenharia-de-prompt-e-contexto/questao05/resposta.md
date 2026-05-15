@@ -1062,8 +1062,8 @@ spec:
 
 # Justificativa
 
-**Before:** Apresentar o estado atual do deployment com os problemas explícitos (credenciais em plaintext, `latest`, réplica única, sem probes, sem `securityContext`) dá ao modelo contexto concreto sobre o que precisa ser corrigido — sem ambiguidade.
+**Before:** Apresentado o modelo/estado atual do deployment com problemas visíveis, como credenciais em texto plano e tag latest, dando contexto ao modelo do que precisa ser corrigido. 
 
-**After:** Listar os requisitos como bullet points objetivos funciona como uma checklist implícita para o modelo: cada item vira uma seção do output, garantindo cobertura completa sem necessidade de reforço posterior.
+**After:** Listei os requisitos como bullet points, como um checklist que reforça ao modelo o que precisa ser de fato implementado/outcome desejado na geração do código. 
 
-**Bridge:** A instrução de seguir o CIS Kubernetes Benchmark eleva o nível de exigência além do "funcional" para o "seguro e auditável", direcionando o modelo a incluir componentes como `NetworkPolicy`, `PodDisruptionBudget`, `RBAC` e `seccompProfile` — que não estariam no output de um prompt genérico. Mesmo o modelo mais simples da Anthropic, o Haiku, entregou uma resposta completa e enterprise-grade.
+**Bridge:** Ao dar a instrução requerendo a criação do código atendendo à padronização da empresa, adiciono CIS Kubernetes Benchmark para melhor instrução ao modelo de como atender à padronização de segurança, visto que é a aplicação principal de entrada de dados. 
