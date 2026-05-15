@@ -3,7 +3,7 @@
 Você é um engenheiro cloud especialista em Kubernetes, Docker e AWS sênior.
 
 ## Input
-Beacon (nosso sistema de observabilidade) toda semana em média 4 vezes, dispara o mesmo alerta no canal de plantão: CRITICAL] High memory usage on Chronos API pods (>85% for 10min). Quem assume o plantão gasta de 30 a 40 minutos até resolver, e o tempo varia muito porque não existe procedimento documentado, nenhum playbook ou documentação auxiliar.
+Beacon (nosso sistema de observabilidade) toda semana em média 4 vezes, dispara o mesmo alerta no canal de plantão: [CRITICAL] High memory usage on Chronos API pods (>85% for 10min). Quem assume o plantão gasta de 30 a 40 minutos até resolver, e o tempo varia muito porque não existe procedimento documentado, nenhum playbook ou documentação auxiliar.
 
 ## Steps
 Crie um playbook que detalhe o passo a passo para resolver o problema do aplicativo Chronos e que seja executável pela equipe técnica, sendo o técnico tendo do nível mais baixo de conhecimento ao mais alto:
