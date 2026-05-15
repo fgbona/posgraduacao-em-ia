@@ -9,7 +9,7 @@ Para garantir a compatibilidade com as versões modernas do provedor AWS no Terr
 
 Abaixo está a estrutura completa do módulo, seguida de um exemplo prático de consumo.
 
-Estrutura do Módulo S3 (/modules/s3_compliant)
+**Estrutura do Módulo S3** (/modules/s3_compliant)
 1. variables.tf
 Conforme a regra, todas as variáveis possuem type e description explicitamente definidos.
 
@@ -122,7 +122,7 @@ output "bucket_arn" {
   value       = aws_s3_bucket.this.arn
 }
 ```
-Exemplo de Uso (Como os times consumirão o módulo)
+**Exemplo de Uso (Como os times consumirão o módulo)**
 Qualquer time que precisar de um bucket S3 agora chamará o bloco abaixo em sua stack (por exemplo, no arquivo main.tf da aplicação):
 
 Terraform
@@ -144,14 +144,14 @@ module "app_data_storage" {
   log_target_prefix = "s3-audit/"
 }
 ```
-O que esse exemplo vai gerar na AWS?
-Nome final do Bucket: hvt-app-dados-usuarios-production
+**O que esse exemplo vai gerar na AWS?**
+**Nome final do Bucket:** hvt-app-dados-usuarios-production
 
-Tags acopladas: * Owner = Data-Engineering-Team
+**Tags acopladas:** * Owner = Data-Engineering-Team
 
 CostCenter = CC-9942-DATA
 
 Environment = production
 
-Segurança aplicada: Bucket 100% privado, com criptografia AES256 automática, histórico de versões ativo e logs sendo despejados no bucket central de segurança.
+**Segurança aplicada:** Bucket 100% privado, com criptografia AES256 automática, histórico de versões ativo e logs sendo despejados no bucket central de segurança.
 # Justificativa
