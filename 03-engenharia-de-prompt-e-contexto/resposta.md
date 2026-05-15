@@ -70,11 +70,11 @@ O documento de post-mortem deverá estar no formato markdown, contendo:
 # Output
 # Post-mortem técnico — Incidente chronos-api (em andamento)
 
-**Status:** ATIVO
-**Severidade:** P1
-**Início da degradação:** ~14:00 UTC (2026-04-24)
-**Deploy suspeito:** v2.47.0 → v2.48.0 (2026-04-23 18:42 UTC)
-**Janela para decisão:** 20 minutos
+*Status: ATIVO
+*Severidade: P1
+*Início da degradação: ~14:00 UTC (2026-04-24)
+*Deploy suspeito: v2.47.0 → v2.48.0 (2026-04-23 18:42 UTC)
+*Janela para decisão: 20 minutos
 
 ---
 
