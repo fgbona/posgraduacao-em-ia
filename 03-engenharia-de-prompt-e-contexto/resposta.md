@@ -15,15 +15,26 @@ Changelog:
 ```
 
 Métricas do Beacon nos últimos 30 minutos:
-
-timestamp                p99_latency_ms   req_rate_s   err_rate_pct **2026**-04-24 13:30 **UTC**     **420**              **1200**         0.2 **2026**-04-24 13:45 **UTC**     **510**              **1450**         0.3 **2026**-04-24 14:00 **UTC**     **780**              **1780**         0.8 **2026**-04-24 14:10 **UTC**     **2400**             **2100**         4.5 **2026**-04-24 14:15 **UTC**     **5200**             **2400**         8.2 **2026**-04-24 14:20 **UTC**     **8100**             **2650**         11.7
-
+```
+timestamp                p99_latency_ms   req_rate_s   err_rate_pct
+2026-04-24 13:30 UTC     420              1200         0.2
+2026-04-24 13:45 UTC     510              1450         0.3
+2026-04-24 14:00 UTC     780              1780         0.8
+2026-04-24 14:10 UTC     2400             2100         4.5
+2026-04-24 14:15 UTC     5200             2400         8.2
+2026-04-24 14:20 UTC     8100             2650         11.7
+```
 
 
 Trecho do log do pod `chronos-api-79c4d8b9-xk2jp`:
 
-``` **2026**-04-24 14:19:48 [**ERROR**] [ledger-client] connection pool exhausted (max=20, active=20, waiting=**147**) **2026**-04-24 14:19:49 [**WARN**]  [ledger-client] query timeout after 2000ms: **SELECT** ... **FROM** transactions **WHERE** ... **2026**-04-24 14:19:49 [**ERROR**] [handler] **POST** /v2/transactions/batch failed: context deadline exceeded **2026**-04-24 14:19:50 [**ERROR**] [ledger-client] connection reset by peer **2026**-04-24 14:19:51 [**WARN**]  [circuit-breaker] ledger-client **OPEN** (threshold 50%, current 87%) **2026**-04-24 14:19:52 [**ERROR**] [reactor] failed to publish message: chronos-api upstream error
-
+```
+2026-04-24 14:19:48 [ERROR] [ledger-client] connection pool exhausted (max=20, active=20, waiting=147)
+2026-04-24 14:19:49 [WARN]  [ledger-client] query timeout after 2000ms: SELECT ... FROM transactions WHERE ...
+2026-04-24 14:19:49 [ERROR] [handler] POST /v2/transactions/batch failed: context deadline exceeded
+2026-04-24 14:19:50 [ERROR] [ledger-client] connection reset by peer
+2026-04-24 14:19:51 [WARN]  [circuit-breaker] ledger-client OPEN (threshold 50%, current 87%)
+2026-04-24 14:19:52 [ERROR] [reactor] failed to publish message: chronos-api upstream error
 ```
 
 Estado do Reactor (fila `chronos-transactions`):
