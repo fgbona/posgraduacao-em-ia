@@ -1,5 +1,5 @@
 # Prompt
-# Context
+## Context
 
 Strickland é head de segurança e compliance, publicou o padrão interno de IaC que todo módulo Terraform novo precisa seguir.
 
@@ -25,19 +25,19 @@ Variáveis de entrada em variables.tf com description e type obrigatórios.
 
 
 
-# Action
+## Action
 
 Crie um novo módulo Terraform, reutilizável, para criar buckets S3 aderentes aos padrões informados. 
 
 
 
-# Result
+## Result
 
 O módulo será consumido por todos os times da empresa, então precisa vir com um exemplo de uso. Todo o resultado deverá ser impresso em formato markdown explicativo.
 
 
 
-# Example
+## Example
 
 Abaixo um exemplo de módulo existente na empresa que deve ser usado como referência de estilo e estrutura
 ```
