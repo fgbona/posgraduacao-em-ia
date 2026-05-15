@@ -18,11 +18,12 @@ Crie um playbook que detalhe o passo a passo para resolver o problema do aplicat
 
 ## Expectation
 O playbook deverá:
-cobrir os passos iniciais de diagnóstico, com os comandos específicos a rodar
-verificação esperada ao final de cada passo
-critérios objetivos para escalar para o tiime sênior
-critério para encerrar o incidente.
-o playbook deverá estar no formato markdown para download.
+* cobrir os passos iniciais de diagnóstico, com os comandos específicos a rodar
+* verificação esperada ao final de cada passo
+* critérios objetivos para escalar para o tiime sênior
+* critério para encerrar o incidente.
+
+O playbook deverá estar no formato markdown para download.
 
 # Modelo
 Gemini 3.1 Pro
