@@ -1066,4 +1066,4 @@ spec:
 
 **After:** Listei os requisitos como bullet points, como um checklist que reforça ao modelo o que precisa ser de fato implementado/outcome desejado na geração do código. 
 
-**Bridge:** Ao dar a instrução requerendo a criação do código atendendo à padronização da empresa, adiciono CIS Kubernetes Benchmark para melhor instrução ao modelo de como atender à padronização de segurança, visto que é a aplicação principal de entrada de dados. 
+**Bridge:** Ao dar a instrução requerendo a criação do código e atendendo à padronização da empresa, adiciono CIS Kubernetes Benchmark para melhor instrução ao modelo sobre como atender à padronização de segurança, visto que é a aplicação principal de entrada de dados. 
