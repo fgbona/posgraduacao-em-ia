@@ -20,7 +20,7 @@ Crie um playbook que detalhe o passo a passo para resolver o problema do aplicat
 O playbook deverá:
 * cobrir os passos iniciais de diagnóstico, com os comandos específicos a rodar
 * verificação esperada ao final de cada passo
-* critérios objetivos para escalar para o tiime sênior
+* critérios objetivos para escalar para o time sênior
 * critério para encerrar o incidente.
 
 # Modelo
