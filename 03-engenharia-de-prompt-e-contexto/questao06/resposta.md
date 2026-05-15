@@ -218,3 +218,7 @@ Environment = production
 
 **Segurança aplicada:** Bucket 100% privado, com criptografia AES256 automática, histórico de versões ativo e logs sendo despejados no bucket central de segurança.
 # Justificativa
+**Context:** Estabeleci o padrão interno de IaC publicado por Strickland, listando os requisitos obrigatórios.
+**Action:** Instrui o modelo a criar um módulo s3 reutilizável focando nos padrões.
+**Result:** O módulo deve incluir um exemplo de uso, pois todos irão utilizar.
+**Example:** Forneci a referência do módulo em que o modelo precisava se basear para construir o código.
