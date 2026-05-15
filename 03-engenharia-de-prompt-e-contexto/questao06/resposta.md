@@ -225,6 +225,6 @@ Environment = production
 
 **Action:** Instrui o modelo a criar um módulo s3 reutilizável focando nos padrões.
 
-**Result:** O módulo deve incluir um exemplo de uso, pois todos irão utilizar.
+**Result:** O módulo deve incluir um exemplo de uso, pois todos do time irão utilizá-lo.
 
-**Example:** Forneci a referência do módulo em que o modelo precisava se basear para construir o código.
+**Example:** Forneci a referência do módulo em que o modelo deveria se basear para construir o código.
