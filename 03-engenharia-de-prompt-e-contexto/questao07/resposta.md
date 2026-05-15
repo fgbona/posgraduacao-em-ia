@@ -187,6 +187,9 @@ O incidente só pode ser considerado Resolvido (e o plantonista liberado) quando
 # Justificativa
 
 ## Role: A role está adequada para respostas com profundidade e técnica adequada. 
+
 ## Input: descreve o problema com detalhes e resolução variável por falta de documentação. 
+
 ## Steps: Lista o passo a passo do ambiente operacional, fornecendo o contexto adequado para criação do playbook. 
+
 ## Expectation: Lista os entregáveis obrigatórios no runbook.
