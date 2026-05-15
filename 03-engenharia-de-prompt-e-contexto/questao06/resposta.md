@@ -14,6 +14,7 @@ Estrutura do Módulo S3 (/modules/s3_compliant)
 Conforme a regra, todas as variáveis possuem type e description explicitamente definidos.
 
 Terraform
+```
 variable "bucket_base_name" {
   description = "Nome base do bucket S3. O módulo aplicará automaticamente o prefixo 'hvt-' e o sufixo do ambiente."
   type        = string
@@ -44,10 +45,12 @@ variable "log_target_prefix" {
   type        = string
   default     = "s3-access-logs/"
 }
+```
 2. main.tf
 Aqui garantimos a padronização do nome com o prefixo hvt-, a fusão das tags obrigatórias e as 4 camadas de segurança exigidas no S3.
 
 Terraform
+```
 locals {
   # Garantia de tags obrigatórias exigidas pelo Compliance
   common_tags = {
@@ -103,10 +106,12 @@ resource "aws_s3_bucket_logging" "this" {
   target_bucket = var.log_target_bucket
   target_prefix = "${var.log_target_prefix}${local.bucket_name}/"
 }
+```
 3. outputs.tf
 Facilita a exportação de atributos essenciais para outros módulos ou recursos da arquitetura.
 
 Terraform
+```
 output "bucket_id" {
   description = "O nome/ID do bucket gerado pelo padrão interno."
   value       = aws_s3_bucket.this.id
@@ -116,10 +121,12 @@ output "bucket_arn" {
   description = "O ARN (Amazon Resource Name) do bucket criado."
   value       = aws_s3_bucket.this.arn
 }
+```
 Exemplo de Uso (Como os times consumirão o módulo)
 Qualquer time que precisar de um bucket S3 agora chamará o bloco abaixo em sua stack (por exemplo, no arquivo main.tf da aplicação):
 
 Terraform
+```
 # Exemplo de consumo do módulo interno de conformidade de S3
 module "app_data_storage" {
   source = "./modules/s3_compliant" # Caminho local ou repositório Git do módulo
@@ -136,6 +143,7 @@ module "app_data_storage" {
   log_target_bucket = "hvt-security-logs-production"
   log_target_prefix = "s3-audit/"
 }
+```
 O que esse exemplo vai gerar na AWS?
 Nome final do Bucket: hvt-app-dados-usuarios-production
 
