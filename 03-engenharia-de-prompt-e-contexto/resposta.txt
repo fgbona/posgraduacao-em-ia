@@ -1,7 +1,0 @@
-###### Prompt
-
-###### Modelo
-
-###### Output
-
-###### Justificativa
