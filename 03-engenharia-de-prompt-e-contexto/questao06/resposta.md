@@ -64,7 +64,8 @@ resource "aws_vpc" "this" {
 
 
 # Modelo
-Gemini 3 Thinkinf
+Gemini 3 Thinking
+
 # Output
 Com base nas diretrizes de segurança e compliance estabelecidas pelo Strickland, desenhei um módulo reutilizável que centraliza todas as regras de governança exigidas.
 
