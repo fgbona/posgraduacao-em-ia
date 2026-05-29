@@ -36,7 +36,7 @@ Crie um Dockerfile para rodar o projeto com as melhores práticas de infraestrut
 
 # Modelo
 
-**Claude Sonnet 4.6**
+**Claude Sonnet 4.6** — escolhido por equilibrar raciocínio forte de código/infraestrutura e custo: gerar um Dockerfile multi-stage com boas práticas é uma tarefa de código de complexidade média, em que o Sonnet entrega qualidade sem precisar do modelo de topo.
 
 ---
 

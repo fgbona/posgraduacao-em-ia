@@ -48,7 +48,7 @@ Crie o novo código do deployment que atenda às padronizações da empresa, inc
 
 # Modelo
 
-**Claude Haiku 4.5**
+**Claude Haiku 4.5** — refatorar um manifesto Kubernetes conhecido contra um conjunto de regras de padronização é uma tarefa estruturada e bem delimitada; o Haiku é eficiente e suficiente para aplicar as correções pedidas com baixo custo.
 
 ---
 

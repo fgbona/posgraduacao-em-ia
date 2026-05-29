@@ -64,7 +64,7 @@ resource "aws_vpc" "this" {
 
 
 # Modelo
-Gemini 3 Thinking
+**Gemini 3 Thinking** — o módulo IaC precisa respeitar várias regras de compliance ao mesmo tempo (tags obrigatórias, prefixo `hvt-`, encryption, versioning, block public access, logging); o modo Thinking ajuda a não esquecer nenhum requisito, e usei outro provedor aqui para cumprir a exigência de pelo menos dois provedores distintos no desafio.
 
 # Output
 Com base nas diretrizes de segurança e compliance estabelecidas pelo Strickland, desenhei um módulo reutilizável que centraliza todas as regras de governança exigidas.

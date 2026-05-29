@@ -36,7 +36,7 @@ O relatório deverá vir no formato markdown.
 
 # Modelo
 
-**Claude Haiku 4.5**
+**Claude Haiku 4.5** — a tarefa é análise de uma tabela pequena de custos somada a uma redação executiva objetiva; o Haiku é rápido e barato e dá conta do volume de dados e do formato pedido sem necessidade de um modelo maior.
 
 ---
 

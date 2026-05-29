@@ -32,7 +32,7 @@ O script bash deve ser comentado em cada instrução feita para ter melhor quali
 
 # Modelo
 
-**Claude Sonnet 4.6**
+**Claude Sonnet 4.6** — um script Bash com várias etapas, funções e tratamento de erro exige bom raciocínio de código e atenção a detalhe; o Sonnet 4.6 cobre isso com folga mantendo custo e latência razoáveis.
 
 ---
 

@@ -24,7 +24,7 @@ O playbook deverá:
 * critério para encerrar o incidente.
 
 # Modelo
-Gemini 3.1 Pro
+**Gemini 3.1 Pro** — o entregável é um runbook operacional longo, didático e em camadas (do técnico júnior ao sênior); o Gemini 3.1 Pro produz documentação procedural bem estruturada e detalhada, adequada a esse formato.
 
 # Output
 # 📖 Playbook de Incidente: High Memory Usage - Chronos API

@@ -31,7 +31,7 @@ CREATE TABLE customers (
 ```
 
 ## Goal
-Escreve uma relatório, que tenha um filtro `status = 'completed'`. O campo `amount_cents` está em centavos de real e precisa aparecer na saída em reais com 2 casas decimais. O recorte é dos últimos 6 meses corridos a partir de hoje (2026-04-24), agrupado por mês (no formato `YYYY-MM`) e por categoria, trazendo duas métricas por linha:
+Escreve uma relatório, que tenha um filtro `status = 'completed'`. O campo `amount_cents` está em centavos de real e precisa aparecer na saída em reais com 2 casas decimais. O recorte é dos últimos 6 meses corridos a partir de hoje (2026-04-24). **Essa data é fixa: ancore a janela na própria query usando a data literal `2026-04-24` (não use `NOW()` nem `CURRENT_DATE`), para que o resultado seja determinístico e idêntico independente do dia em que a query for executada.** Os dados devem ser agrupados por mês (no formato `YYYY-MM`) e por categoria, trazendo duas métricas por linha:
 - Quantidade de transações
 - Volume total em reais
 
@@ -43,7 +43,7 @@ O relatório deverá ser entregue no formato markdown.
 
 # Modelo
 
-**Claude Haiku 4.5**
+**Claude Haiku 4.5** — gerar uma query SQL determinística e um relatório de formato bem especificado é uma tarefa estruturada e de baixa ambiguidade, então escolhi o Haiku pela velocidade e baixo custo; assumi o risco (que se confirmou) de um modelo menor precisar de um prompt mais explícito quanto à data fixa.
 
 ---
 
@@ -63,7 +63,8 @@ SELECT
   ROUND(SUM(t.amount_cents)::NUMERIC / 100, 2) AS volume_reais
 FROM transactions t
 WHERE t.status = 'completed'
-  AND t.created_at >= NOW() - INTERVAL '6 months'
+  AND t.created_at >= DATE '2026-04-24' - INTERVAL '6 months'
+  AND t.created_at <  DATE '2026-04-24' + INTERVAL '1 day'
 GROUP BY DATE_TRUNC('month', t.created_at), t.category
 ORDER BY mes ASC, categoria ASC;
 ```
@@ -72,7 +73,7 @@ ORDER BY mes ASC, categoria ASC;
 - `DATE_TRUNC('month', t.created_at)` agrupa as transações por mês completo
 - `TO_CHAR(..., 'YYYY-MM')` formata o mês como solicitado
 - `WHERE t.status = 'completed'` filtra apenas transações completadas
-- `NOW() - INTERVAL '6 months'` captura os últimos 6 meses (de 2025-10-24 a 2026-04-24)
+- A janela é ancorada na data fixa `DATE '2026-04-24'`: `>= 2026-04-24 - 6 meses` e `< 2026-04-24 + 1 dia`, cobrindo de 2025-10-24 a 2026-04-24 de forma determinística — como não usa `NOW()`, o resultado é o mesmo independente do dia em que a query rodar
 - `SUM(t.amount_cents)::NUMERIC / 100` converte centavos para reais
 - `ROUND(..., 2)` garante 2 casas decimais
 - Ordenação: primeiro por mês (crescente), depois por categoria (crescente)
@@ -157,7 +158,8 @@ SELECT
   ROUND(SUM(t.amount_cents)::NUMERIC / 100, 2) AS volume_reais
 FROM transactions t
 WHERE t.status = 'completed'
-  AND t.created_at >= NOW() - INTERVAL '6 months'
+  AND t.created_at >= DATE '2026-04-24' - INTERVAL '6 months'
+  AND t.created_at <  DATE '2026-04-24' + INTERVAL '1 day'
 GROUP BY DATE_TRUNC('month', t.created_at), t.category
 ORDER BY mes ASC, categoria ASC;
 ```
@@ -182,7 +184,8 @@ SELECT
   ROUND(SUM(t.amount_cents)::NUMERIC / 100, 2) AS volume_reais
 FROM transactions t
 WHERE t.status = 'completed'
-  AND t.created_at >= NOW() - INTERVAL '6 months'
+  AND t.created_at >= DATE '2026-04-24' - INTERVAL '6 months'
+  AND t.created_at <  DATE '2026-04-24' + INTERVAL '1 day'
 GROUP BY DATE_TRUNC('month', t.created_at), t.category
 ORDER BY mes ASC, categoria ASC;
 ```
@@ -215,3 +218,5 @@ Para completar o relatório: Execute a query no PostgreSQL e preencha os resulta
 **Action:** Fornece o schema completo das tabelas `transactions` e `customers`, e as categorias, dando ao modelo contexto técnico para poder criar a query.
 
 **Goal:** Relatório baseado no filtro de status, conversão de `amount_cents` para reais e agrupamento por mês e categoria, duas métricas por linha e ordenação final. Mesmo o modelo mais simples da Anthropic, o Haiku, entregou uma resposta e relatórios bem completos.
+
+**Refinamento (output ruim → correção):** Na primeira execução o modelo interpretou "a partir de hoje (2026-04-24)" como `NOW() - INTERVAL '6 months'`, deixando a data fixa apenas no comentário. Isso torna a janela móvel: rodada em outro dia, a query traria um período diferente. Refinei o Goal do prompt para exigir explicitamente a data literal `2026-04-24` no `WHERE` (proibindo `NOW()`/`CURRENT_DATE`), e a query passou a ancorar a janela com `>= DATE '2026-04-24' - INTERVAL '6 months'` e limite superior `< DATE '2026-04-24' + INTERVAL '1 day'`, garantindo resultado determinístico. Uma alternativa ainda mais robusta seria definir a data de referência uma única vez num CTE (`WITH params AS (SELECT DATE '2026-04-24' AS data_ref)`) e referenciá-la nos dois limites, evitando repetir o literal.
